@@ -78,11 +78,28 @@ h1{
 
 }
 
+button{
+    background-color: #ecbced;
+    border-radius: 30px;
+    padding: 13px 20px;
+    font-size: 0.7em;
+    color: #410054;
+    border: 1px solid #410054;
+}
+
+button:hover{
+    background-color: #fed9ff;
+}
 h2{
     margin-top: 30px;
     color: #ab40cb;
 }
 
+#file {
+    margin-top: 40px;
+    color: #ab40cb;
+    font-size: 1.2em;
+}
 h3{
     color: #803ea8;
 }
@@ -92,6 +109,14 @@ h3{
     color: #410054;
     text-align: center;
     margin: 0 350px 10px;
+
+}
+
+.question{
+    font-size: 1.3em;
+    color: #410054;
+    margin: 0 22% 10px;
+
 
 }
 
