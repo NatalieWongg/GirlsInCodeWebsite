@@ -50,5 +50,6 @@ plt.title("Feature Importance (Random Forest)")
 plt.tight_layout()
 plt.savefig("feature_importance.png")
 
-pickle.dump(clf,open("model.pkl","wb"))
-model = pickle.load(open('model.pkl','rb'))
+pickle.dump(clf,open("model.pkl","wb")) #freezes trained model so no need to retrain
+pickle.dump(scaler, open("scaler.pkl", "wb"))
+model = pickle.load(open('model.pkl','rb')) #deploy

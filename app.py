@@ -4,10 +4,16 @@ from db import supabase
 import os
 import sys
 import subprocess
+import pickle
+from extract_all_features import extract_all_features  
+import pandas as pd
 
 load_dotenv()
 app = Flask(__name__) #app is an instance of the Flask class
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
+
+model = pickle.load(open("model.pkl", "rb"))
+scaler = pickle.load(open("scaler.pkl", "rb"))
 
 def run_code(filepath):
     python_cmd = "python" if sys.platform.startswith("win") else "python3"
@@ -65,13 +71,25 @@ def question(question_id):
     answer = answer_row[0]["answer_text"] if answer_row else None
     output = None
     result = None  # default if user hasn’t submitted code yet
-
+    classification = None
     if request.method == "POST":
         uploaded_file = request.files.get("code_file")
         if uploaded_file:
             # Create a temporary file for the uploaded code
+            
+
             with tempfile.NamedTemporaryFile(suffix=".py", delete=True) as tmp:
                 uploaded_file.save(tmp.name)
+                try:
+                    features = extract_all_features(tmp.name)
+                    X = pd.DataFrame([features])
+                    X_scaled = scaler.transform(X)
+                    proba = model.predict_proba(X_scaled)[0] 
+                    classification = model.classes_[np.argmax(proba)] 
+                    human_pct = proba[0] * 100
+                    ai_pct = proba[1] * 100
+                except Exception as e:
+                    classification = f"Error extracting features: {e}"
                 output = run_code(tmp.name)
                 if output.startswith("Error:"):
                     result = output
@@ -82,7 +100,7 @@ def question(question_id):
                     result = "Incorrect"
                     output = output.strip()
 
-    return render_template("question.html", question=question, answer=answer, result=result, output = output)
+    return render_template("question.html", question=question, answer=answer, result=result, output = output, classification = classification)
 
 
 
