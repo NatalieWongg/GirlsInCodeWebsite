@@ -7,6 +7,7 @@ import subprocess
 import pickle
 from extract_all_features import extract_all_features  
 import pandas as pd
+import numpy as np
 
 load_dotenv()
 app = Flask(__name__) #app is an instance of the Flask class

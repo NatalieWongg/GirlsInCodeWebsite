@@ -4,6 +4,7 @@ import csv
 import re
 import keyword
 from collections import Counter
+import numpy as np
 import ast
 
 def extract_lexical_features(file):
