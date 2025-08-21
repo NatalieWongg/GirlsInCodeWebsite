@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
+        <meta charset = "utf-8">
+        <link  rel="icon" href="https://yt3.googleusercontent.com/ytc/AIdro_mgnodbikJ-Ti1M2Eo9eR5HSjh69ZrKFbUMpactPIe1Xg=s900-c-k-c0x00ffffff-no-rj">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Girls In Code SEA</title>
+    </head>
+    <body>
+        <header>
+            
+            <a id="home" href = "{{url_for('home')}}">Home</a>
+            <a href = "{{url_for('home')}}"><img id="logo" alt="Girls in Code SEA Logo" src ="{{ url_for('static', filename = 'gic_logo.png')}}"></a>
+            <nav>
+                <ul>
+                    <li><a href = "{{ url_for('competitions') }}">Competitions</a></li>
+                    <li><a href = "{{ url_for('signIn') }}">Sign In</a></li>
+                </ul>
+            </nav>
+        </header>
+        <h1 class = "title" >Girls In Code Southeast Asia</h1>
+        <section>
+            <h2 class = "title">Who are we?</h2>
+            <p class="center-text">We are a group of girls from Garden International School dedicated to building a stronger female coding community through competitions, workshops, and events.</p>
+            <br>
+            <p class="center-text"> Have a go at our annual GIC Competition competition questions via the “Competitions” tab above, and be sure to watch out for our upcoming events!</p>
+        </section>
+        <section>
+            <br>
+            <h2 class = "title">Team Members</h2>
+            <div class="row">
+                <div class="member">
+                    <h3 class="name"><strong>Director:</strong> Natalie Wong (Year 13)</h3>
+                    <img class="pic" src ="{{ url_for('static', filename = 'mypic.jpg')}}">
+                </div>
+                <div class="member">
+                    <h3  class="name"><strong>Co-Director:</strong> Emily Xu (Year 12)</h3>
+                    <img class="pic" src ="{{ url_for('static', filename = 'emily.jpg')}}">
+                </div>
+                <div class="member">
+                    <h3 class="name"><strong>Social Media Manager:</strong> Zahra Adam (Year 9)</h3>
+                    <img class="pic" src ="{{ url_for('static', filename = 'zahra.JPG')}}">
+                </div>
+            </div>
+            
+        </section>
+        {% include 'includes/footer.html' %}
+    </body>
+</html>

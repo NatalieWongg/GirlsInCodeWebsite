@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
+        <meta charset = "utf-8">
+        <link  rel="icon" href="https://yt3.googleusercontent.com/ytc/AIdro_mgnodbikJ-Ti1M2Eo9eR5HSjh69ZrKFbUMpactPIe1Xg=s900-c-k-c0x00ffffff-no-rj">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Girls In Code SEA</title>
+    </head>
+    <body>
+        <header>
+            
+            <a id="home" href = "{{url_for('home')}}">Home</a>
+            <a href = "{{url_for('home')}}"><img id="logo" alt="Girls in Code SEA Logo" src ="{{ url_for('static', filename = 'gic_logo.png')}}"></a>
+            <nav>
+                <ul>
+                    <li><a href = "{{ url_for('competitions') }}">Competitions</a></li>
+                    <li><a href = "{{ url_for('signIn') }}">Sign In</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main class="flex-grow">
+            <h1 class = "title" >2024</h1>
+        </main>
+        {% include 'includes/footer.html' %}
+    </body>
+</html>
