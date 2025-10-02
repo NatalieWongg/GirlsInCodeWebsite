@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 
 load_dotenv()
-app = Flask(__name__) #app is an instance of the Flask class
+app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
 
 model = pickle.load(open("model.pkl", "rb"))
@@ -21,9 +21,9 @@ def run_code(filepath):
     try:
         result = subprocess.run(
             [python_cmd, filepath],
-            capture_output=True,   # capture stdout and stderr
-            text=True,             # output as string
-            timeout=5              # optional: prevent infinite loops
+            capture_output=True,  
+            text=True,            
+            timeout=5              
         )
         if result.returncode != 0:
             return f"Error:\n{result.stderr}"
@@ -33,7 +33,7 @@ def run_code(filepath):
     
     
 
-@app.route("/") #part of the url after the domain name
+@app.route("/") 
 def home():
     return render_template('home.html')
 
@@ -66,17 +66,15 @@ import tempfile
 
 @app.route("/question/<int:question_id>", methods=["GET", "POST"])
 def question(question_id):
-    # Fetch question and answer from Supabase
     question = supabase.table("questions").select("*").eq("id", question_id).execute().data[0]
     answer_row = supabase.table("answers").select("answer_text").eq("id", question_id).execute().data
     answer = answer_row[0]["answer_text"] if answer_row else None
     output = None
-    result = None  # default if user hasn’t submitted code yet
+    result = None  
     classification = None
     if request.method == "POST":
         uploaded_file = request.files.get("code_file")
         if uploaded_file:
-            # Create a temporary file for the uploaded code
             
 
             with tempfile.NamedTemporaryFile(suffix=".py", delete=True) as tmp:
@@ -94,7 +92,7 @@ def question(question_id):
                 output = run_code(tmp.name)
                 if output.startswith("Error:"):
                     result = output
-                elif output.strip() == answer.strip():  # compare outputs ignoring whitespace
+                elif output.strip() == answer.strip():  
                     output = output.strip()
                     result = "Correct"
                 else:
@@ -107,4 +105,3 @@ def question(question_id):
 
 
 #flask --app app run
-#the command above runs this code and creates a server

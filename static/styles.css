@@ -17,7 +17,7 @@ header {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%); /* perfectly center */
+    transform: translate(-50%, -50%); 
     height: 50px;
 }
 
@@ -37,7 +37,7 @@ nav > ul {
   flex-direction: row;
   height: 100%;
   gap: 20px;
-  list-style: none; /* removes bullets */
+  list-style: none; 
 }
 
 
@@ -68,7 +68,7 @@ header a:hover {
 .title {
     width: 100%;
     text-align: center;
-    display: block; /* ensure it's block */
+    display: block; 
     font-family: sans-serif;
     
 }
@@ -129,28 +129,28 @@ html, body,main {
     margin: 0;
     padding: 0;
     border: 0;
-    display: flex;           /* makes body a flex container */
-    flex-direction: column;  /* stack header, main, footer vertically */
+    display: flex;         
+    flex-direction: column;  
 }
 
 .pic {
     height: 320px;
 
-    display: block;    /* ensures margin auto works if used */
+    display: block;    
     margin: 0 auto ;
 }
 
 .row {
     display: flex;
-    justify-content: center; /* center the row */
+    justify-content: center; 
     align-items: flex-start;
-    flex-wrap: wrap;         /* responsive wrapping */
-    gap: 40px;               /* spacing between cards */
+    flex-wrap: wrap;         
+    gap: 40px;               
 }
 
 .member {
-    text-align: center;      /* center image & name */
-    width: 400px;            /* same width for all members */
+    text-align: center;      
+    width: 400px;            
 }
 
 footer {
@@ -172,14 +172,14 @@ footer p {
 
 }
 main.flex-grow {
-    flex: 1; /* makes main take all available vertical space */
+    flex: 1; 
 }
 
 .list {
-    list-style: none;      /* remove bullets */
-    padding: 0;            /* remove default padding */
-    margin: 0 auto 5px;        /* center the whole ul block */
-    text-align: center;    /* center inline content (li text) */
+    list-style: none;      
+    padding: 0;           
+    margin: 0 auto 5px;        
+    text-align: center;    
     font-size: 1.1em;
     color: #410054;
     text-decoration: none;

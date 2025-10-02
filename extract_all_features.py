@@ -6,6 +6,7 @@ import keyword
 from collections import Counter
 import numpy as np
 import ast
+import pandas as pd
 
 def extract_lexical_features(file):
     
@@ -151,14 +152,10 @@ with open(fout, 'w', newline='', encoding='utf-8') as csvfile:
     writer.writeheader()
     writer.writerows(data)
 
-import pandas as pd
 
-# Load the CSV file
+
+
 df = pd.read_csv('features.csv')
-
-# Sort by the 'filename' column
 df_sorted = df.sort_values(by='filename')
-
-# Save the reordered CSV to a new file (or overwrite the original)
 df_sorted.to_csv('sorted_file.csv', index=False)
 
