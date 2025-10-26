@@ -4,8 +4,6 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, accuracy_score
-import shap
-import numpy as np
 import pickle
 
 df = pd.read_csv("sorted_file.csv")
@@ -29,11 +27,11 @@ clf.fit(X_train, y_train)
 
 y_pred = clf.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, y_pred))
-print("\nClassification Report:\n", classification_report(y_test, y_pred))
+print(classification_report(y_test, y_pred))
 
 
 scores = cross_val_score(clf, X_scaled, y, cv=5)
-print("\nCross-validated accuracy:", scores.mean())
+print("Cross-validated accuracy:", scores.mean())
 importances = clf.feature_importances_
 features = X.columns
 plt.figure(figsize=(10, 6))
