@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+import datetime
 from dotenv import load_dotenv
 from db import supabase
 import os
@@ -12,6 +13,8 @@ import numpy as np
 load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "dev-secret")
+
+DEADLINE = datetime.datetime(2025, 1, 10, 17, 0) 
 
 model = pickle.load(open("model.pkl", "rb"))
 scaler = pickle.load(open("scaler.pkl", "rb"))
