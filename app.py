@@ -44,6 +44,10 @@ def home():
 def competitions():
     return render_template('competitions.html')
 
+@app.route('/scoreboard')
+def scoreboard():
+    return render_template('scoreboard.html')
+
 @app.route("/signIn")
 def signIn():
     return render_template('signIn.html')
