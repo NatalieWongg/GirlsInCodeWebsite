@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
+        <meta charset = "utf-8">
+        <link  rel="icon" href="https://yt3.googleusercontent.com/ytc/AIdro_mgnodbikJ-Ti1M2Eo9eR5HSjh69ZrKFbUMpactPIe1Xg=s900-c-k-c0x00ffffff-no-rj">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Girls In Code SEA</title>
+    </head>
+    <body>
+        <header>
+            
+            <a id="home" href = "{{url_for('home')}}">Home</a>
+            <a href = "{{url_for('home')}}"><img id="logo" alt="Girls in Code SEA Logo" src ="{{ url_for('static', filename = 'gic_logo.png')}}"></a>
+            <nav>
+                <ul>
+                    <li><a href = "{{ url_for('competitions') }}">Competitions</a></li>
+                    <li><a href = "{{ url_for('signIn') }}">Sign In</a></li>
+                </ul>
+            </nav>
+        </header>
+        <h1 class = "title" >2025 November</h1>
+        <h2 class="title">Questions</h2>
+        <section class ="row">
+          
+          <div class="level">
+            <h3>Beginner</h3>
+            <ul class ="list">
+              {% for q in beginner %}
+                <li><a href="{{ url_for('submissions', question_id=q.id) }}">{{q.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="level">
+            <h3>Intermediate</h3>
+            <ul class ="list">
+              {% for q in intermediate %}
+                <li><a href="{{ url_for('submissions', question_id=q.id) }}">{{q.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="level">
+            <h3>Advanced</h3>
+            <ul class ="list">
+              {% for q in advanced %}
+                <li><a href="{{ url_for('submissions', question_id=q.id) }}">{{q.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </section>
+        {% include 'includes/footer.html' %}
+
+    </body>
+</html>

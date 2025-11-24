@@ -20,17 +20,26 @@
             </nav>
         </header>
         <main class="flex-grow">
-            <h1 class = "title" >Competitions</h1>
+            <h1 class = "title" >{{question.year}} {{question.level}}: {{question.title}}</h1>
+            <br>
+            <br>
+            <br>
             <section class="center-text">
-                <h3>Running competition:</h3>
-                <p><a href = "{{ url_for('y2025n') }}">2025 November</a></p>
+                <form method="POST" enctype="multipart/form-data">
+                    <strong id="file">Source File:  </strong>
+                    <input type="file" name="code_file" accept=".py" required>
+                    <button type="submit">Submit</button>
+                </form>
             </section>
             <section class="center-text">
-                <h3>Have a go at some of our past competition questions:</h3>
-                <p><a href = "{{ url_for('y2025m') }}">2025 March</a></p>
-                <p><a href = "{{ url_for('y2024') }}">2024</a></p>
-                <p><a href = "{{ url_for('y2023') }}">2023</a></p>
+                {% if result %}
+                    <p>{{result}}</p> 
+                    <p><strong>Your output is: </strong>{{output}}</p> 
+                    <br>
+                    <p>We are testing our AI detector and your result is: {{classification}}. If your code is flagged as AI, please be aware that we will be double checking your code.</p>
+                {% endif %}
             </section>
+            
         </main>
         {% include 'includes/footer.html' %}
     </body>

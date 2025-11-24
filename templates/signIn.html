@@ -19,29 +19,13 @@
                 </ul>
             </nav>
         </header>
-        <div id="g_id_onload"
-            data-client_id="464154670514-ecpl0f28n37pvenh49t412jtlpfg46fh.apps.googleusercontent.com"
-            data-callback="handleCredentialResponse">
-        </div>
+        <form method="POST">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
 
-        <div class="g_id_signin"
-            data-type="standard"
-            data-shape="rectangular"
-            data-theme="outline"
-            data-text="signin_with"
-            data-size="large">
-        </div>
-
-        <div id="user-info"></div>
-
-        <script>
-            function handleCredentialResponse(response) {
-            const payload = JSON.parse(atob(response.credential.split('.')[1]));
-            console.log("ID Token:", token);
-            console.log("User Info:", payload);
-            document.getElementById("user-info").innerText = `Hello, ${payload.name}`;
-            }
-        </script>
     
     </body>
 </html>
