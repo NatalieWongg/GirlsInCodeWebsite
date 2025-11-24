@@ -46,6 +46,10 @@ def home():
 def competitions():
     return render_template('competitions.html')
 
+@app.route('/scoreboard')
+def scoreboard():
+    return render_template('scoreboard.html')
+
 @app.route("/2025m")
 def y2025m():
     beginner = supabase.table("questions").select("title","id").eq("year", "2025 March").eq("level", "Beginner").execute().data 
