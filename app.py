@@ -9,7 +9,7 @@ import pickle
 from extract_all_features import extract_all_features  
 import pandas as pd
 import numpy as np
-from passlib.hash import bcrypt
+from passlib.hash import argon2
 
 
 load_dotenv()
@@ -164,7 +164,9 @@ def signIn():
         password = request.form.get("password")
         name = request.form.get("name")
 
-        password_hash = bcrypt.hash(password)
+        password_hash = argon2.hash(str(password))
+        print("PASSWORD RECEIVED:", repr(password))
+
 
         existing_user = supabase.table("users").select("*").eq("email", email).execute().data
         if existing_user:
@@ -193,7 +195,7 @@ def login():
             return redirect(url_for("login"))
 
         user = user_row[0]
-        if not bcrypt.verify(password, user["password_hash"]):
+        if not argon2.verify(password, user["password_hash"]):
             flash("Invalid email or password")
             return redirect(url_for("login"))
 
