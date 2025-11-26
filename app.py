@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 from passlib.hash import argon2
 import tempfile
+from extract_all_features import extract_all_features
 
 load_dotenv()
 app = Flask(__name__)
