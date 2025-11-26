@@ -10,7 +10,6 @@ import pandas as pd
 import numpy as np
 from passlib.hash import argon2
 import tempfile
-from extract_all_features import extract_all_features
 
 load_dotenv()
 app = Flask(__name__)
@@ -87,17 +86,20 @@ def question(question_id):
         uploaded_file = request.files.get("code_file")
 
         if uploaded_file:
-            with tempfile.NamedTemporaryFile(suffix=".py") as tmp:
+            with tempfile.NamedTemporaryFile(suffix=".py", delete=True) as tmp:
                 uploaded_file.save(tmp.name)
-
                 try:
-                    feats = extract_all_features(tmp.name)
-                    X = pd.DataFrame([feats])
+                    features = extract_all_features(tmp.name)
+                    X = pd.DataFrame([features])
                     X_scaled = scaler.transform(X)
-                    proba = model.predict_proba(X_scaled)[0]
-                    classification = model.classes_[np.argmax(proba)]
+                    proba = model.predict_proba(X_scaled)[0] 
+                    classification = model.classes_[np.argmax(proba)] 
+                    human_pct = proba[0] * 100
+                    ai_pct = proba[1] * 100
                 except Exception as e:
-                    classification = f"ML Error: {e}"
+                    classification = f"Error extracting features: {e}"
+
+                    
 
                 output = run_code(tmp.name)
 
@@ -130,6 +132,17 @@ def submissions(question_id):
         if uploaded_file:
             with tempfile.NamedTemporaryFile(suffix=".py") as tmp:
                 uploaded_file.save(tmp.name)
+                try:
+                    features = extract_all_features(tmp.name)
+                    X = pd.DataFrame([features])
+                    X_scaled = scaler.transform(X)
+                    proba = model.predict_proba(X_scaled)[0] 
+                    classification = model.classes_[np.argmax(proba)] 
+                    human_pct = proba[0] * 100
+                    ai_pct = proba[1] * 100
+                except Exception as e:
+                    classification = f"Error extracting features: {e}"
+
                 output = run_code(tmp.name)
 
                 if output.startswith("Error"):
@@ -151,7 +164,7 @@ def submissions(question_id):
         question=question,
         result=result,
         output=output,
-        addscore=addscore)
+        addscore=addscore, classification = classification)
 
 @app.route("/api/leaderboard")
 def api_leaderboard():
