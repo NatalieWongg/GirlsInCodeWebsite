@@ -202,3 +202,52 @@ main.flex-grow {
     font-size: 1.1em;
     color: #410054;
 }
+
+
+.scoreboard-container {
+    max-width: 720px;
+    margin: auto;
+    padding: 20px;
+}
+
+.scoreboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.scoreboard-table th {
+    text-align: left;
+    padding: 14px;
+    font-size: 1rem;
+    background: #ff64b8; 
+    color: white;
+}
+
+.scoreboard-table td {
+    padding: 14px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #eee;
+}
+
+.scoreboard-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.scoreboard-table tr:hover {
+    background: #ffe3f3;
+}
+
+.loading {
+    text-align: center;
+    color: #777;
+    font-size: 1.1rem;
+    margin-top: 30px;
+}
+
+.scoreboard-table tr:first-child td {
+    font-weight: 800;
+}

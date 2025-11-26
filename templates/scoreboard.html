@@ -1,34 +1,82 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
-        <meta charset="utf-8">
-        <link rel="icon" href="https://yt3.googleusercontent.com/ytc/AIdro_mgnodbikJ-Ti1M2Eo9eR5HSjh69ZrKFbUMpactPIe1Xg=s900-c-k-c0x00ffffff-no-rj">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Girls In Code SEA</title>
-    </head>
-    <body>
-        <header>
-            <a id="home" href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('home') }}">
-                <img id="logo" alt="Girls in Code SEA Logo" src="{{ url_for('static', filename='gic_logo.png') }}">
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('competitions') }}">Competitions</a></li>
-                    <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
-                    <li><a href="{{ url_for('signIn') }}">Sign In</a></li>
-                </ul>
-            </nav>
-        </header>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
+    <meta charset="utf-8">
+    <link rel="icon" href="https://yt3.googleusercontent.com/ytc/AIdro_mgnodbikJ-Ti1M2Eo9eR5HSjh69ZrKFbUMpactPIe1Xg=s900-c-k-c0x00ffffff-no-rj">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girls In Code SEA — Scoreboard</title>
+</head>
 
-        <main class="flex-grow">
-            <h1 class="title">Scoreboard</h1>
+<body>
+    <header>
+        <a id="home" href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('home') }}">
+            <img id="logo" alt="Girls in Code SEA Logo" src="{{ url_for('static', filename='gic_logo.png') }}">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('competitions') }}">Competitions</a></li>
+                <li><a href="{{ url_for('scoreboard') }}" class="active">Scoreboard</a></li>
+                <li><a href="{{ url_for('signIn') }}">Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <!-- Add scoreboard content here later -->
-            <p style="text-align:center;">Coming soon!</p>
-        </main>
+    <main class="flex-grow">
+        <h1 class="title" style="margin-top: 40px;">Live Scoreboard</h1>
 
-        {% include 'includes/footer.html' %}
-    </body>
+        <section class="scoreboard-container">
+            <div id="loadingMessage" class="loading">Loading scores...</div>
+
+            <table id="scoreboardTable" class="scoreboard-table" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Team</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="scoreboardBody">
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    {% include 'includes/footer.html' %}
+
+    <script>
+        async function fetchScores() {
+            try {
+                const response = await fetch("/api/scoreboard");
+                const data = await response.json();
+
+                const table = document.getElementById("scoreboardTable");
+                const body = document.getElementById("scoreboardBody");
+                const loading = document.getElementById("loadingMessage");
+
+                body.innerHTML = "";
+
+                data.forEach((team, index) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>#${index + 1}</td>
+                        <td>${team.team_name}</td>
+                        <td>${team.score}</td>
+                    `;
+                    body.appendChild(row);
+                });
+
+                loading.style.display = "none";
+                table.style.display = "table";
+
+            } catch (error) {
+                console.error("Error loading scoreboard:", error);
+            }
+        }
+
+        fetchScores();
+        setInterval(fetchScores, 3000); 
+    </script>
+</body>
 </html>
