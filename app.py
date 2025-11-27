@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 from passlib.hash import argon2
 import tempfile
+from extract_all_features import extract_all_features
 
 load_dotenv()
 app = Flask(__name__)
@@ -43,7 +44,22 @@ def competitions():
 
 @app.route("/scoreboard")
 def scoreboard():
-    return render_template("scoreboard.html")
+    rows = supabase.table("scores").select("*").execute().data
+
+    totals = {}
+    for r in rows:
+        team = r["team_name"] 
+        totals[team] = totals.get(team, 0) + r["score"]
+
+    leaderboard = sorted(
+        [{"team": t, "score": s} for t, s in totals.items()],
+        key=lambda x: x["score"],
+        reverse=True
+    )
+
+    return render_template("scoreboard.html", leaderboard=leaderboard)
+
+
 
 @app.route("/2025m")
 def y2025m():
@@ -125,6 +141,7 @@ def submissions(question_id):
     output = None
     result = None
     addscore = 0
+    classification = None 
 
     if request.method == "POST":
         uploaded_file = request.files.get("code_file")
@@ -137,9 +154,7 @@ def submissions(question_id):
                     X = pd.DataFrame([features])
                     X_scaled = scaler.transform(X)
                     proba = model.predict_proba(X_scaled)[0] 
-                    classification = model.classes_[np.argmax(proba)] 
-                    human_pct = proba[0] * 100
-                    ai_pct = proba[1] * 100
+                    classification = model.classes_[np.argmax(proba)]
                 except Exception as e:
                     classification = f"Error extracting features: {e}"
 
@@ -155,16 +170,21 @@ def submissions(question_id):
 
                 if addscore > 0 and session.get("user_email"):
                     supabase.table("scores").insert({
-                        "user_email": session["user_email"],
+                        "team_name": session["user_name"],  
                         "score": addscore,
                         "competition": question["year"],
                     }).execute()
 
-    return render_template("submissions.html",
+
+    return render_template(
+        "submissions.html",
         question=question,
         result=result,
         output=output,
-        addscore=addscore, classification = classification)
+        addscore=addscore,
+        classification=classification
+    )
+
 
 @app.route("/api/leaderboard")
 def api_leaderboard():
@@ -172,15 +192,16 @@ def api_leaderboard():
 
     totals = {}
     for r in rows:
-        email = r["user_email"]
-        totals[email] = totals.get(email,0) + r["score"]
+        team = r["team_name"]
+        totals[team] = totals.get(team, 0) + r["score"]
 
     leaderboard = [
-        {"user": k, "score": v}
-        for k,v in sorted(totals.items(), key=lambda x: x[1], reverse=True)
+        {"team": k, "score": v}
+        for k, v in sorted(totals.items(), key=lambda x: x[1], reverse=True)
     ]
 
     return jsonify(leaderboard)
+
 
 @app.route("/signIn", methods=["GET", "POST"])
 def signIn():
@@ -221,4 +242,4 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-#flask --app app run
+#flask --app app run --debug
