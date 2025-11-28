@@ -8,3 +8,4 @@ argon2-cffi==25.1.0
 supabase==2.22.0
 Flask-SocketIO==5.5.1
 python-socketio==5.15.0
+gunicorn==22.0.0
