@@ -135,8 +135,40 @@ def question(question_id):
 
 @app.route("/submissions/<int:question_id>", methods=["GET", "POST"])
 def submissions(question_id):
-    question = supabase.table("questions").select("*").eq("id",question_id).execute().data[0]
-    answer = supabase.table("answers").select("answer_text").eq("id",question_id).execute().data[0]["answer_text"]
+    if not session.get("user_email"):
+        flash("Please sign in first.")
+        return redirect(url_for("signIn"))
+
+    team_name = session["user_name"]
+
+    question = supabase.table("questions")\
+        .select("*")\
+        .eq("id",question_id)\
+        .single()\
+        .execute().data
+
+    answer = supabase.table("answers")\
+        .select("answer_text")\
+        .eq("id",question_id)\
+        .single()\
+        .execute().data["answer_text"]
+
+    lock = supabase.table("submissions_lock")\
+        .select("*")\
+        .eq("team_name", team_name)\
+        .eq("question_id", question_id)\
+        .execute().data
+
+    if lock and lock[0]["solved"]:
+        flash("You already solved this question!")
+        return render_template(
+            "submissions.html",
+            question=question,
+            result="Already solved",
+            output=None,
+            addscore=0,
+            classification=None
+        )
 
     output = None
     result = None
@@ -149,6 +181,7 @@ def submissions(question_id):
         if uploaded_file:
             with tempfile.NamedTemporaryFile(suffix=".py") as tmp:
                 uploaded_file.save(tmp.name)
+
                 try:
                     features = extract_all_features(tmp.name)
                     X = pd.DataFrame([features])
@@ -156,25 +189,32 @@ def submissions(question_id):
                     proba = model.predict_proba(X_scaled)[0] 
                     classification = model.classes_[np.argmax(proba)]
                 except Exception as e:
-                    classification = f"Error extracting features: {e}"
+                    classification = f"Feature extraction error: {e}"
 
                 output = run_code(tmp.name)
 
                 if output.startswith("Error"):
-                    result = "Error in code execution"
+                    result = "Error running code"
                 elif output.strip() == answer.strip():
-                    addscore = question["points"]
                     result = "Correct"
+                    addscore = question["points"]
                 else:
                     result = "Incorrect"
 
-                if addscore > 0 and session.get("user_email"):
+                if addscore > 0:
                     supabase.table("scores").insert({
-                        "team_name": session["user_name"],  
+                        "team_name": team_name,
+                        "email": session["user_email"],
                         "score": addscore,
                         "competition": question["year"],
                     }).execute()
 
+                    supabase.table("submissions_lock").insert({
+                        "team_name": team_name,
+                        "question_id": question_id,
+                        "solved": True
+                    }).execute()
+                    flash("Correct! Your submission is now locked.")
 
     return render_template(
         "submissions.html",
@@ -184,6 +224,7 @@ def submissions(question_id):
         addscore=addscore,
         classification=classification
     )
+
 
 
 @app.route("/api/leaderboard")
@@ -237,6 +278,12 @@ def signIn():
         return redirect(url_for("home"))
 
     return render_template("signIn.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("Logged out!")
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run(debug=True)

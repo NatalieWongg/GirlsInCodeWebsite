@@ -251,3 +251,10 @@ main.flex-grow {
 .scoreboard-table tr:first-child td {
     font-weight: 800;
 }
+
+.user-tag {
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #eee;
+    font-weight: bold;
+}

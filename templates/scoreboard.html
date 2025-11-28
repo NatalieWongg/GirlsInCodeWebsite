@@ -11,17 +11,25 @@
 <body>
     <header>
         <a id="home" href="{{ url_for('home') }}">Home</a>
+    
         <a href="{{ url_for('home') }}">
             <img id="logo" alt="Girls in Code SEA Logo" src="{{ url_for('static', filename='gic_logo.png') }}">
         </a>
+    
         <nav>
             <ul>
                 <li><a href="{{ url_for('competitions') }}">Competitions</a></li>
-                <li><a href="{{ url_for('scoreboard') }}" class="active">Scoreboard</a></li>
-                <li><a href="{{ url_for('signIn') }}">Sign In</a></li>
+                <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
+    
+                {% if session.get("user_name") %}
+                    <li class="user-tag">👤 {{ session["user_name"] }}</li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('signIn') }}">Sign In</a></li>
+                {% endif %}
             </ul>
         </nav>
-    </header>
+    </header>   
 
     <main class="flex-grow">
         <h1 class="title" style="margin-top: 40px;">Live Scoreboard</h1>
@@ -60,7 +68,7 @@
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
                         <td>#${index + 1}</td>
-                        <td>${row.team_name}</td>
+                        <td>${row.team}</td>
                         <td>${row.score}</td>
                     `;
                     body.appendChild(tr);

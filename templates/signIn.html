@@ -63,20 +63,27 @@
 
 <body>
     <header>
-        <a id="home" href="{{url_for('home')}}">Home</a>
-        <a href="{{url_for('home')}}">
-            <img id="logo" alt="Girls in Code SEA Logo" src="{{ url_for('static', filename='gic_logo.png')}}">
+        <a id="home" href="{{ url_for('home') }}">Home</a>
+    
+        <a href="{{ url_for('home') }}">
+            <img id="logo" alt="Girls in Code SEA Logo" src="{{ url_for('static', filename='gic_logo.png') }}">
         </a>
+    
         <nav>
             <ul>
                 <li><a href="{{ url_for('competitions') }}">Competitions</a></li>
                 <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
-                <li><a href="{{ url_for('signIn') }}">Sign In</a></li>
+    
+                {% if session.get("user_name") %}
+                    <li class="user-tag">👤 {{ session["user_name"] }}</li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('signIn') }}">Sign In</a></li>
+                {% endif %}
             </ul>
         </nav>
-    </header>
+    </header>     
 
-    <!-- FLASH MESSAGES -->
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <div id="flash" style="margin-top: 20px;">
@@ -89,7 +96,6 @@
 
     <div class="auth-container">
 
-        <!-- REGISTER -->
         <div id="register-box">
             <h2>Create Account</h2>
             <form method="POST">
@@ -101,7 +107,6 @@
             <div class="toggle" onclick="toggleForms()">Already have an account? Sign in.</div>
         </div>
 
-        <!-- LOGIN -->
         <div id="login-box" style="display:none;">
             <h2>Sign In</h2>
             <form method="POST">
