@@ -30,6 +30,55 @@
             </nav>
         </header>     
         <h1 class = "title" >2025 November</h1>
+        <section >
+          <ul class="list">
+            <li><a  target ="_blank" href="https://www.canva.com/design/DAG5geGPMdM/qrdJRg2qvS9V3u6gLfwAVw/edit?utm_content=DAG5geGPMdM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">Slides</a></li>
+            <li><a  target ="_blank" href="https://drive.google.com/file/d/1tdHyqWyWvIr87oqLqZU1A3aQx3lpMVW9/view?usp=sharing">Question Booklet</a></li>
+          </ul>
+        </section>
+        <section>
+          <h2 class="title">Winners</h2>
+          <div class="row">
+            
+            <div class= "age">
+              <h3 class="title">Junior</h3>
+              <ul class="winners">
+                <li>🥇Tania Chopra</li>
+                <li>🥈Nicholas Wong & Gia Pardal (tie)</li>
+                <li>🥉Yingci Liu</li>
+              </ul>
+            </div>
+            <div class= "age">
+              <h3 class="title">Senior:</h3>
+              <ul  class="winners">
+                <li>🥇Bhavika Khanna</li>
+                <li>🥈Aadya Seth</li>
+                <li>🥉Ridhima Garodia</li>
+              </ul>
+            </div>
+            <div class= "age">
+              <h3 class="title">Team:</h3>
+              <ul  class="winners">
+                <li>🥇Knockout - Yashvia Jain, Melissa Dyer</li>
+                <li>🥈Iris - Mehr Rehmat Hora, Pekhna Hora, Paavani Kapur</li>
+                <li>🥉Giraffes - Junyi Chai, Ryan Au, Kyle Park </li>
+              </ul>
+            </div>
+          </div>
+          <br>
+          <h2 class="title">Question Makers</h2>
+          <ul class="list">
+            <li>Ananya Prasad</li>
+            <li>Harleen Sachdev</li>
+            <li>Gio Hwang</li>
+            <li>Emily Xu</li>
+            <li>Camelia Chew</li>
+            <li>Josh Yeo</li>
+            <li>Doyun Kim</li>
+            <li>Natalie Wong</li>
+          </ul>
+        </section>
+        <br>
         <h2 class="title">Questions</h2>
         <section class ="row">
           
@@ -37,7 +86,7 @@
             <h3>Beginner</h3>
             <ul class ="list">
               {% for q in beginner %}
-                <li><a href="{{ url_for('submissions', question_id=q.id) }}">{{q.title }}</a></li>
+                <li><a href="{{ url_for('question', question_id=q.id) }}">{{q.title }}</a></li>
               {% endfor %}
             </ul>
           </div>
@@ -45,7 +94,7 @@
             <h3>Intermediate</h3>
             <ul class ="list">
               {% for q in intermediate %}
-                <li><a href="{{ url_for('submissions', question_id=q.id) }}">{{q.title }}</a></li>
+                <li><a href="{{ url_for('question', question_id=q.id) }}">{{q.title }}</a></li>
               {% endfor %}
             </ul>
           </div>
@@ -53,7 +102,7 @@
             <h3>Advanced</h3>
             <ul class ="list">
               {% for q in advanced %}
-                <li><a href="{{ url_for('submissions', question_id=q.id) }}">{{q.title }}</a></li>
+                <li><a href="{{ url_for('question', question_id=q.id) }}">{{q.title }}</a></li>
               {% endfor %}
             </ul>
           </div>

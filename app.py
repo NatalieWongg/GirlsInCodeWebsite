@@ -68,9 +68,10 @@ def y2025m():
 
 @app.route("/2025n")
 def y2025n():
-    beginner = supabase.table("questions").select("title,id").eq("year","2025 November").eq("level","Beginner").execute().data
-    intermediate = supabase.table("questions").select("title,id").eq("year","2025 November").eq("level","Intermediate").execute().data
-    advanced = supabase.table("questions").select("title,id").eq("year","2025 November").eq("level","Advanced").execute().data
+    beginner = supabase.table("questions").select("title,id").eq("year","2025 November").eq("level","Beginner").order("id").execute().data
+    intermediate = supabase.table("questions").select("title,id").eq("year","2025 November").eq("level","Intermediate").order("id").execute().data
+    advanced = supabase.table("questions").select("title,id").eq("year","2025 November").eq("level","Advanced").order("id").execute().data
+
     return render_template("2025n.html",
         beginner=beginner,
         intermediate=intermediate,
@@ -287,6 +288,19 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/2025n")
+def archive_2025_nov():
+    beginner = sorted(get_questions("beginner"), key=lambda q: int(q.title.split()[-1]))
+    intermediate = sorted(get_questions("intermediate"), key=lambda q: int(q.title.split()[-1]))
+    advanced = sorted(get_questions("advanced"), key=lambda q: int(q.title.split()[-1]))
+
+    return render_template(
+        "past_competitions/2025n.html",
+        beginner=beginner,
+        intermediate=intermediate,
+        advanced=advanced,
+    )
 
 
 #flask --app app run --debug

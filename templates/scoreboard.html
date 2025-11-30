@@ -35,8 +35,10 @@
         <h1 class="title" style="margin-top: 40px;">Live Scoreboard</h1>
 
         <section class="scoreboard-container">
-            <div id="loadingMessage" class="loading">Loading scores...</div>
 
+            <h2>Live Scoreboard</h2>
+            <div id="loadingMessage" class="loading">Loading scores...</div>
+        
             <table id="scoreboardTable" class="scoreboard-table" style="display:none;">
                 <thead>
                     <tr>
@@ -47,7 +49,35 @@
                 </thead>
                 <tbody id="scoreboardBody"></tbody>
             </table>
+        
+            <hr style="margin:40px 0; opacity:0.4;">
+        
+            <h2 style="margin-bottom: 15px;">🏆 Overall Scores — November 2025</h2>
+        
+            <table class="scoreboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Team</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>#1</td><td>Yashvi/Melissa</td><td>230</td></tr>
+                    <tr><td>#2</td><td>Bhavikak_Girlsincode</td><td>220</td></tr>
+                    <tr><td>#3</td><td>Team_Giraffes</td><td>190</td></tr>
+                    <tr><td>#4</td><td>Team_iris</td><td>180</td></tr>
+                    <tr><td>#5</td><td>IndivJ_TaniaChopra</td><td>145</td></tr>
+                    <tr><td>#6</td><td>Aadya Seth</td><td>140</td></tr>
+                    <tr><td>#7</td><td>Nicholas Wong Wei Hsien</td><td>120</td></tr>
+                    <tr><td>#8</td><td>IndivJ_GiaPardal</td><td>120</td></tr>
+                    <tr><td>#9</td><td>I am on a hole</td><td>120</td></tr>
+                    <tr><td>#10</td><td>IndivS_ridhima</td><td>120</td></tr>
+                </tbody>
+            </table>
+        
         </section>
+        
     </main>
 
     {% include 'includes/footer.html' %}
