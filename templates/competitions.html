@@ -19,6 +19,7 @@
                 <ul>
                     <li><a href="{{ url_for('competitions') }}">Competitions</a></li>
                     <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
+                    <li><a href="{{ url_for('hackathon') }}">Hackathon</a></li>
         
                     {% if session.get("user_name") %}
                         <li class="user-tag">👤 {{ session["user_name"] }}</li>
@@ -30,7 +31,7 @@
             </nav>
         </header>     
         <main class="flex-grow">
-            <h1 class = "title" >Competitions</h1>
+            <h1 class = "title" >Annual Competitions</h1>
             <section class="center-text">
                 <h3>Running competition:</h3>
                 <p>No Ongoing Competitions, look out on social media for more updates</p>
@@ -46,3 +47,5 @@
         {% include 'includes/footer.html' %}
     </body>
 </html>
+
+
