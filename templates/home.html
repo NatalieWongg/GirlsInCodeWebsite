@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 <html>
+    <style>
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            padding: 10px 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+         }
+
+        header #logo {
+            height: 60px; 
+        }
+
+        nav ul {
+            display: flex; 
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+
+    </style>
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css')}}">
         <meta charset = "utf-8">
@@ -19,6 +42,7 @@
                 <ul>
                     <li><a href="{{ url_for('competitions') }}">Competitions</a></li>
                     <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
+                    <li><a href="{{ url_for('hackathon') }}">Hackathon</a></li>
         
                     {% if session.get("user_name") %}
                         <li class="user-tag">👤 {{ session["user_name"] }}</li>
@@ -27,6 +51,7 @@
                         <li><a href="{{ url_for('signIn') }}">Sign In</a></li>
                     {% endif %}
                 </ul>
+                
             </nav>
         </header>        
         <h1 class = "title" >Girls In Code Southeast Asia</h1>

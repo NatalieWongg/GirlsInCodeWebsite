@@ -38,9 +38,32 @@ def run_code(filepath):
 def home():
     return render_template("home.html")
 
+@app.route("/hackathon")
+def hackathon():
+    return render_template("hackathon.html")
+
 @app.route("/competitions")
 def competitions():
-    return render_template("competitions.html")
+    if supabase is None:
+        leaderboard = []
+    else:
+        rows = supabase.table("scores").select("*").execute().data
+
+        totals = {}
+        for r in rows:
+            team = r["team_name"]
+            totals[team] = totals.get(team, 0) + r["score"]
+
+        leaderboard = sorted(
+            [{"team": t, "score": s} for t, s in totals.items()],
+            key=lambda x: x["score"],
+            reverse=True
+        )
+
+    return render_template(
+        "competitions.html",
+        leaderboard=leaderboard
+    )
 
 @app.route("/scoreboard")
 def scoreboard():
