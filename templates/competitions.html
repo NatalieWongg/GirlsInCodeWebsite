@@ -19,6 +19,7 @@
                 <ul>
                     <li><a href="{{ url_for('competitions') }}">Competitions</a></li>
                     <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
+                    <li><a href="{{ url_for('hackathon') }}">Hackathon</a></li>
         
                     {% if session.get("user_name") %}
                         <li class="user-tag">👤 {{ session["user_name"] }}</li>
