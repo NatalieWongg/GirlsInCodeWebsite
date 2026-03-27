@@ -15,11 +15,16 @@
                 <img id="logo" alt="Girls in Code SEA Logo" src="{{ url_for('static', filename='gic_logo.png') }}">
             </a>
         
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('competitions') }}">Competitions</a></li>
-                    <li><a href="{{ url_for('scoreboard') }}">Scoreboard</a></li>
-                    <li><a href="{{ url_for('hackathon') }}">Hackathon</a></li>
+               <nav>
+    <ul>
+        <li class="dropdown">
+            <a href="{{ url_for('competitions') }}" class="dropbtn">Annual Competitions ▾</a>
+            <ul class="dropdown-content">
+                <li><a href="{{ url_for('scoreboard') }}">2025 Scoreboard</a></li>
+            </ul>
+        </li>
+        
+        <li><a href="{{ url_for('hackathon') }}">Hackathon</a></li>
         
                     {% if session.get("user_name") %}
                         <li class="user-tag">👤 {{ session["user_name"] }}</li>
