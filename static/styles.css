@@ -258,3 +258,41 @@ main.flex-grow {
     background: #eee;
     font-weight: bold;
 }
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    z-index: 100;
+    border-radius: 8px;
+    padding: 10px 0;
+    list-style: none; 
+}
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.dropdown-content li a {
+    color: #6a1b9a;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.dropdown-content li a:hover {
+    background-color: #f3e5f5;
+}
