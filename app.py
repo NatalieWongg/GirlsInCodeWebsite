@@ -42,6 +42,10 @@ def home():
 def competitions():
     return render_template("competitions.html")
 
+@app.route("/hackathon")
+def hackathon():
+    return render_template("hackathon.html")
+
 @app.route("/scoreboard")
 def scoreboard():
     rows = supabase.table("scores").select("*").execute().data
